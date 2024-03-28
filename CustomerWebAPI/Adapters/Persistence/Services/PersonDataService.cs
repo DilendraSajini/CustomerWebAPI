@@ -1,6 +1,4 @@
-﻿using CustomerWebAPI.Adapters.Persistence;
-using CustomerWebAPI.Adapters.Persistence.Entities;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 namespace CustomerWebAPI.Adapters.Persistence.Services
 {

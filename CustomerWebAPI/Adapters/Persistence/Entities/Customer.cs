@@ -1,5 +1,4 @@
-﻿
-namespace CustomerWebAPI.Adapters.Persistence.Entities
+﻿namespace CustomerWebAPI.Adapters.Persistence.Entities
 {
     public class Customer
     {

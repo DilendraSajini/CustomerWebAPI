@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Configuration;
-
-namespace CustomerWebAPI.Config
+﻿namespace CustomerWebAPI.Config
 {
     public class ConfigProvider
     {
