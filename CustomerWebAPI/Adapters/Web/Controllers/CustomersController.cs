@@ -8,16 +8,12 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ILogger<CustomersController> _logger;
+        private Customer[] customerList;
 
         public CustomersController(ILogger<CustomersController> logger)
         {
             _logger = logger;
-        }
-
-        [HttpGet]
-        public IEnumerable<Customer> Get()
-        {
-            var customerList = Enumerable.Range(1, 5).Select(index =>
+            customerList = Enumerable.Range(1, 5).Select(index =>
             {
                 var customer = new Customer();
                 //customer.Id = index;
@@ -34,7 +30,33 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
 
                 return customer;
             }).ToArray();
+        }
+
+        [HttpGet]
+        public IEnumerable<Customer> Get()
+        {
             return customerList;
+        }
+
+        [HttpGet("{id}")]
+        public Customer Get(int id)
+        {
+            return customerList[id];
+        }
+
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
+
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
         }
     }
 }
