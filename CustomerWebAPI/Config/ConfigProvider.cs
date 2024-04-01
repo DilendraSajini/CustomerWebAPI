@@ -1,15 +1,10 @@
 ﻿namespace CustomerWebAPI.Config
 {
-    public class ConfigProvider
+    public static class ConfigProvider
     {
-        private IConfiguration configuration;
-        public ConfigProvider()
-        {
-            var builder = new ConfigurationBuilder()
-                        .AddJsonFile("appsettings.json");
-            this.configuration = builder.Build();
-        }
-        public string GetConnectionString(string str)
+        private static IConfiguration configuration = new ConfigurationBuilder()
+                        .AddJsonFile("appsettings.json").Build();
+        public static string GetConnectionString(string str)
         {
             return configuration.GetValue<string>(str);
         }

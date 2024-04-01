@@ -6,12 +6,12 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
     {
         private PersonDataService() : base() { }
 
-        public List<Entities.Customer> GetPeople()
+        public List<Models.Customer> GetPeople()
         {
             string query = "SELECT * FROM [us-500]";
             return queryData(query);
         }
-        private List<Entities.Customer> queryData(string query)
+        private List<Models.Customer> queryData(string query)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -43,7 +43,7 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
                 }
 
             }
-            return new List<Entities.Customer>();
+            return new List<Models.Customer>();
         }
 
     }
