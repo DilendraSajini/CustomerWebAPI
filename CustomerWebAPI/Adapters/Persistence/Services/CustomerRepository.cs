@@ -5,10 +5,10 @@ using System.Data.SqlClient;
 
 namespace CustomerWebAPI.Adapters.Persistence.Services
 {
-    public static class CustomerDataService
+    public class CustomerRepository: ICustomerRepository
     {
-        public static readonly string connectionString = ConfigProvider.GetConnectionString("ConnectionString");
-        public static List<Customer> GetCustomers()
+        public readonly string connectionString = ConfigProvider.GetConnectionString("ConnectionString");
+        public List<Customer> GetAllCustomers()
         {
             string query = "SELECT TOP (10) * FROM [CustomersNew$]";
             List<Customer> newCustomerList = new List<Customer>();
@@ -42,7 +42,7 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
             return newCustomerList;
         }
 
-        public static Customer GetCustomerById(int customerId)
+        public Customer GetCustomerById(int id)
         {
             string query = "SELECT * FROM [CustomersNew$] WHERE ID=@Id";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -51,7 +51,7 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
                 {
 
                     SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@Id", customerId);
+                    command.Parameters.AddWithValue("@Id", id);
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
@@ -77,7 +77,7 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
             return new Customer();
         }
 
-        public static int CreateCustomer(Customer customer)
+        public int CreateCustomer(Customer customer)
         {
             string query = "INSERT INTO [CustomersNew$] " +
             "(NAME_, SURNAME, NAMESURNAME, GENDER, " +
@@ -114,7 +114,7 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
             return -1;
         }
 
-        public static int DeleteCustomerById(int customerId)
+        public int DeleteCustomerById(int customerId)
         {
             string query = "DELETE FROM [CustomersNew$] WHERE ID=@Id";
             using (SqlConnection connection = new SqlConnection(connectionString))

@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Adapters\Web\API\HomeController.cs" />
+    <Compile Remove="Adapters\Web\Controllers\HomeController.cs" />
   </ItemGroup>
 
   <ItemGroup>
