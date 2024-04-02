@@ -1,56 +1,48 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using CustomerWebAPI.Adapters.Persistence.Services;
 
-namespace CustomerWebAPI.Adapters.Web.API
+namespace CustomerWebAPI.Adapters.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CustomerController : ControllerBase
+public static class CustomerController
+{
+    public static void MapCustomersEndpoints (this IEndpointRouteBuilder routes)
     {
-        private List<Customer> customerList = Enumerable.Range(1, 5).Select(index =>
-        {
-            var customer = new Customer();
-            customer.Id = index;
-            customer.FirstName = "Jared";
-            customer.LastName = "Jarvis";
-            customer.CompanyName = "Sanchez-Fletcher";
-            customer.City = "Hatfieldshire";
-            customer.Country = "Eritrea";
-            customer.Zip = "0094";
-            customer.PhoneNumber1 = "274.188.8773x41185";
-            customer.PhoneNumber2 = "001-215-760-4642x969";
-            customer.Email = "gabriellehartman@benjamin.com";
-            customer.Website = "https://www.mccarthy.info/";
+        var group = routes.MapGroup("/api/customers").WithTags(nameof(Customer));
 
-            return customer;
-        }).ToList();
+            group.MapGet("/", () =>
+            {
+                return CustomerDataService.GetCustomers();
+            })
+            .WithName("GetAllCustomers")
+            .WithOpenApi()
+            .RequireAuthorization();
 
-        [HttpGet, Authorize]
-        public IEnumerable<Customer> Get()
+        group.MapGet("/{id}", (int id) =>
         {
-            return customerList;
-        }
+            return CustomerDataService.GetCustomerById(id);
+        })
+        .WithName("GetCustomerById")
+        .WithOpenApi();
 
-        [HttpGet("{id}")]
-        public IEnumerable<Customer> Get(int id)
+        group.MapPut("/{id}", (int id, Customer input) =>
         {
-            return customerList.Where(x => x.Id == id);
-        }
+            return TypedResults.NoContent();
+        })
+        .WithName("UpdateCustomer")
+        .WithOpenApi();
 
-        [HttpPost]
-        public void Post([FromBody] string value)
+        group.MapPost("/", (Customer customer) =>
         {
-        }
+            return CustomerDataService.CreateCustomer(customer);
+        })
+        .WithName("CreateCustomer")
+        .WithOpenApi();
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        group.MapDelete("/{id}", (int id) =>
         {
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+            return CustomerDataService.DeleteCustomerById(id);
+        })
+        .WithName("DeleteCustomer")
+        .WithOpenApi();
     }
-}
+}}

@@ -3,13 +3,8 @@ using System.Data.SqlClient;
 
 namespace CustomerWebAPI.Adapters.Persistence
 {
-    public class DataService
+    public static class DataService
     {
-        protected string connectionString = "";
-
-        protected DataService()
-        {
-            connectionString = ConfigProvider.GetConnectionString("ConnectionString");
-        }
+        public static readonly string connectionString = ConfigProvider.GetConnectionString("ConnectionString");
     }
 }

@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace CustomerWebAPI.Adapters.Web.Controllers
 {
-    public static class LoginEndpoints
+    public static class LoginController
     {
         public static void MapLoginEndpoints(this IEndpointRouteBuilder routes)
         {
