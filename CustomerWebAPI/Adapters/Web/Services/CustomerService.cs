@@ -24,6 +24,10 @@ namespace CustomerWebAPI.Adapters.Web.Services
         {
             return customerRepository.GetAllCustomers();
         }
+        public Task<List<Customer>> GetAllCustomersAsync()
+        {
+            return customerRepository.GetAllCustomersAsync();
+        }
 
         public Customer GetCustomerById(int id)
         {

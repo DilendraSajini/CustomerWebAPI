@@ -39,7 +39,40 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
                 }
 
             }
-            return newCustomerList;
+            return newCustomerList.OrderBy(customer => customer.Id).ToList();
+        }
+        public async Task<List<Customer>> GetAllCustomersAsync()
+        {
+            string query = "SELECT TOP (10) * FROM [CustomersNew$]";
+            List<Customer> newCustomerList = new List<Customer>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                    if (reader.HasRows)
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            newCustomerList.Add(CustomerMapper.GetCustomerFromSqlDataReader(reader));
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No rows found.");
+                    }
+                    reader.Close();
+                    Console.WriteLine("Connected to SQL Server Express using Windows authentication.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error connecting to SQL Server Express: {ex.Message}");
+                }
+
+            }
+            return newCustomerList.OrderBy(customer => customer.Id).ToList();
         }
 
         public Customer GetCustomerById(int id)

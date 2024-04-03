@@ -1,7 +1,5 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
-using CustomerWebAPI.Adapters.Persistence.Services;
 using CustomerWebAPI.Adapters.Web.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerWebAPI.Adapters.Web.Controllers
 {
@@ -9,7 +7,6 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
     {
         public static void MapCustomersEndpoints(this IEndpointRouteBuilder routes, IApplicationBuilder app)
         {
-            //ICustomerRepository customerRepo = app.ApplicationServices.GetRequiredService<CustomerWebAPI.Adapters.Web.Services>();
             ICustomerService customerService = app.ApplicationServices.GetService<ICustomerService>();
 
             var group = routes.MapGroup("/api/customers").WithTags(nameof(Customer));
@@ -22,33 +19,45 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
             .WithOpenApi()
             .RequireAuthorization();
 
+            group.MapGet("/async", () =>
+            {
+                return customerService.GetAllCustomersAsync();
+            })
+            .WithName("GetAllCustomersAsync")
+            .WithOpenApi()
+            .RequireAuthorization();
+
             group.MapGet("/{id}", (int id) =>
             {
                 return customerService.GetCustomerById(id);
             })
             .WithName("GetCustomerById")
-            .WithOpenApi();
+            .WithOpenApi()
+            .RequireAuthorization();
 
             group.MapPut("/{id}", (int id, Customer input) =>
             {
                 return TypedResults.NoContent();
             })
             .WithName("UpdateCustomer")
-            .WithOpenApi();
+            .WithOpenApi()
+            .RequireAuthorization();
 
             group.MapPost("/", (Customer customer) =>
             {
                 return customerService.CreateCustomer(customer);
             })
             .WithName("CreateCustomer")
-            .WithOpenApi();
+            .WithOpenApi()
+            .RequireAuthorization();
 
             group.MapDelete("/{id}", (int id) =>
             {
                 return customerService.DeleteCustomerById(id);
             })
             .WithName("DeleteCustomer")
-            .WithOpenApi();
+            .WithOpenApi()
+            .RequireAuthorization();
         }
     }
 }
