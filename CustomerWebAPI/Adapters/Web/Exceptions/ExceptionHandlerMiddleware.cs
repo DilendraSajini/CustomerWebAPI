@@ -1,10 +1,10 @@
 ﻿using CustomerWebAPI.Adapters.Web.Exceptions;
 
-internal class CustomExceptionHandlerMiddleware
+internal class ExceptionHandlerMiddleware
 {
     private readonly RequestDelegate next;
 
-    public CustomExceptionHandlerMiddleware(RequestDelegate next)
+    public ExceptionHandlerMiddleware(RequestDelegate next)
     {
         this.next = next;
     }

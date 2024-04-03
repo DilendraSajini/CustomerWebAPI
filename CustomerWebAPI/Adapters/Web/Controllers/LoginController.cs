@@ -1,9 +1,7 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
-using CustomerWebAPI.Config;
+using CustomerWebAPI.Adapters.Web.Security;
 using log4net;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 namespace CustomerWebAPI.Adapters.Web.Controllers
 {
@@ -18,26 +16,10 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(loginDTO.UserName) ||
-                    string.IsNullOrEmpty(loginDTO.Password))
-                        return Results.BadRequest("Username and/or Password not specified");
-                    if (loginDTO.UserName.Equals(ConfigProvider.GetConnectionString("User:UserName")) &&
-                    loginDTO.Password.Equals(ConfigProvider.GetConnectionString("User:Password")))
+                    if (SecurityTokenUtil.IsValidUser(loginDTO))
                     {
-                        var secretKey = ConfigProvider.GetConnectionString("Jwt:Key");
-                        var symmetricKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey));
-                        var signinCredentials = new SigningCredentials
-                        (symmetricKey, SecurityAlgorithms.HmacSha256);
-
-                        var jwtSecurityToken = new JwtSecurityToken(
-                            issuer: ConfigProvider.GetConnectionString("Jwt:Issuer"),
-                            audience: ConfigProvider.GetConnectionString("Jwt:Audience"),
-                            claims: new List<Claim>(),
-                            expires: DateTime.Now.AddMinutes(10),
-                            signingCredentials: signinCredentials
-                        );
                         return Results.Ok(new JwtSecurityTokenHandler().
-                        WriteToken(jwtSecurityToken));
+                        WriteToken(SecurityTokenUtil.GetJwtSecurityToken()));
                     }
                 }
                 catch (Exception ex)
@@ -45,6 +27,7 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
                     log.Error($"An error occurred in generating the token: {ex.Message}");
                     return Results.BadRequest("An error occurred in generating the token");
                 }
+                log.Error("Is not a valid user");
                 return Results.Unauthorized();
             })
             .WithName("CreateLogin")

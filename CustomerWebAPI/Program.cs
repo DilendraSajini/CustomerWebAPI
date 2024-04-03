@@ -1,9 +1,8 @@
-using CustomerWebAPI.Adapters.Persistence.Services;
 using CustomerWebAPI.Adapters.Web.Controllers;
+using CustomerWebAPI.Adapters.Web.Security;
 using CustomerWebAPI.Adapters.Web.Services;
+using CustomerWebAPI.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,17 +19,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(o =>
 {
-    o.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey
-        (System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = false,
-        ValidateIssuerSigningKey = true
-    };
+    o.TokenValidationParameters = SecurityTokenUtil.GetTokenValidationParameters();
 });
 builder.Services.AddAuthorization();
 builder.Services.AddSwaggerGen(option =>
@@ -69,7 +58,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.MapControllers();
 app.MapCustomersEndpoints(app);
 app.MapLoginEndpoints();

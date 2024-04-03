@@ -1,5 +1,5 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
-using CustomerWebAPI.Adapters.Persistence.Services;
+using CustomerWebAPI.Application.Services;
 using log4net;
 
 namespace CustomerWebAPI.Adapters.Web.Services

@@ -1,5 +1,4 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
-using CustomerWebAPI.Adapters.Persistence.Services;
 using log4net;
 using System.Data.SqlClient;
 

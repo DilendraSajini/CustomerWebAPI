@@ -6,11 +6,11 @@ using log4net;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace CustomerWebAPI.Adapters.Persistence.Services
+namespace CustomerWebAPI.Application.Services
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public readonly string connectionString = ConfigProvider.GetConnectionString("ConnectionString");
+        public readonly string connectionString = ConfigProvider.GetConfiguration("ConnectionString");
         private static readonly ILog log = LogManager.GetLogger(typeof(CustomerRepository));
         public List<Customer> GetAllCustomers()
         {
