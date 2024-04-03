@@ -1,13 +1,17 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Mappers;
 using CustomerWebAPI.Adapters.Persistence.Models;
+using CustomerWebAPI.Adapters.Web.Exceptions;
 using CustomerWebAPI.Config;
+using log4net;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace CustomerWebAPI.Adapters.Persistence.Services
 {
-    public class CustomerRepository: ICustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         public readonly string connectionString = ConfigProvider.GetConnectionString("ConnectionString");
+        private static readonly ILog log = LogManager.GetLogger(typeof(CustomerRepository));
         public List<Customer> GetAllCustomers()
         {
             string query = "SELECT TOP (10) * FROM [CustomersNew$]";
@@ -28,14 +32,15 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
                     }
                     else
                     {
-                        Console.WriteLine("No rows found.");
+                        log.Debug("No customers found.");
                     }
                     reader.Close();
-                    Console.WriteLine("Connected to SQL Server Express using Windows authentication.");
+                    log.Debug("Connected to database successfully");
                 }
-                catch (Exception ex)
+                catch (SqlException ex)
                 {
-                    Console.WriteLine($"Error connecting to SQL Server Express: {ex.Message}");
+                    log.Error($"Error connecting to database: {ex.Message}");
+                    throw new DBConnectionException();
                 }
 
             }
@@ -61,14 +66,15 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
                     }
                     else
                     {
-                        Console.WriteLine("No rows found.");
+                        log.Debug("No customers found.");
                     }
                     reader.Close();
-                    Console.WriteLine("Connected to SQL Server Express using Windows authentication.");
+                    log.Debug("Connected to database successfully");
                 }
-                catch (Exception ex)
+                catch (SqlException ex)
                 {
-                    Console.WriteLine($"Error connecting to SQL Server Express: {ex.Message}");
+                    log.Error($"Error connecting to database: {ex.Message}");
+                    throw new DBConnectionException();
                 }
 
             }
@@ -82,30 +88,30 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
             {
                 try
                 {
-
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@Id", id);
                     connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.HasRows)
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if (reader.HasRows)
                         {
-                            return CustomerMapper.GetCustomerFromSqlDataReader(reader);
+                            while (reader.Read())
+                            {
+                                return CustomerMapper.GetCustomerFromSqlDataReader(reader);
+                            }
+                        }
+                        else
+                        {
+                            log.Debug("No customer found.");
+                            throw new NoCustomerFoundException();
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine("No rows found.");
-                    }
-                    reader.Close();
-                    Console.WriteLine("Connected to SQL Server Express using Windows authentication.");
                 }
-                catch (Exception ex)
+                catch (SqlException ex)
                 {
-                    Console.WriteLine($"Error connecting to SQL Server Express: {ex.Message}");
+                    log.Error($"Error connecting to SQL Server Express: {ex.Message}");
+                    throw new DBConnectionException();
                 }
-
             }
             return new Customer();
         }
@@ -134,17 +140,17 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
                     }
                     else
                     {
-                        Console.WriteLine("Failed to create customer.");
+                        log.Debug("Failed to create customer.");
+                        throw new NoCustomerCreateException();
                     }
-                    Console.WriteLine("Connected to SQL Server Express using Windows authentication.");
                 }
-                catch (Exception ex)
+                catch (SqlException ex)
                 {
-                    Console.WriteLine($"Error connecting to SQL Server Express: {ex.Message}");
+                    log.Error($"Error connecting to database: {ex.Message}");
+                    throw new DBConnectionException();
                 }
 
             }
-            return -1;
         }
 
         public int DeleteCustomerById(int customerId)
@@ -159,23 +165,22 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
                     command.Parameters.AddWithValue("@Id", customerId);
                     connection.Open();
                     int rowsAffected = command.ExecuteNonQuery();
-                    if (rowsAffected >0)
+                    if (rowsAffected > 0)
                     {
                         return customerId;
                     }
                     else
                     {
-                        Console.WriteLine("No customer found.");
+                        log.Debug("No customer found.");
+                        throw new NoCustomerFoundException();
                     }
-                    Console.WriteLine("Connected to SQL Server Express using Windows authentication.");
                 }
-                catch (Exception ex)
+                catch (SqlException ex)
                 {
-                    Console.WriteLine($"Error connecting to SQL Server Express: {ex.Message}");
+                    log.Error($"Error connecting to database: {ex.Message}");
+                    throw new DBConnectionException();
                 }
-
             }
-            return -1;
         }
     }
 }

@@ -69,6 +69,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.MapControllers();
 app.MapCustomersEndpoints(app);
 app.MapLoginEndpoints();

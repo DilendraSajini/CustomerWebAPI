@@ -1,10 +1,13 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
+using CustomerWebAPI.Adapters.Persistence.Services;
+using log4net;
 using System.Data.SqlClient;
 
 namespace CustomerWebAPI.Adapters.Persistence.Mappers
 {
     public static class CustomerMapper
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(CustomerMapper));
         public static Customer GetCustomerFromSqlDataReader(SqlDataReader reader)
         {
             var customer = new Customer();

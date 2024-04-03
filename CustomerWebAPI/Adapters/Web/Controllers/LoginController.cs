@@ -1,5 +1,6 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
 using CustomerWebAPI.Config;
+using log4net;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,9 +9,10 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
 {
     public static class LoginController
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(LoginController));
         public static void MapLoginEndpoints(this IEndpointRouteBuilder routes)
         {
-            var group = routes.MapGroup("/api/Login").WithTags(nameof(Login));
+            var group = routes.MapGroup("/api/restaurent/v1.0/login").WithTags(nameof(Login));
 
             group.MapPost("/", (Login loginDTO) =>
             {
@@ -40,6 +42,7 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
                 }
                 catch (Exception ex)
                 {
+                    log.Error($"An error occurred in generating the token: {ex.Message}");
                     return Results.BadRequest("An error occurred in generating the token");
                 }
                 return Results.Unauthorized();

@@ -1,15 +1,18 @@
-﻿using CustomerWebAPI.Adapters.Persistence.Models;
+﻿using CustomerWebAPI.Adapters.Persistence.Mappers;
+using CustomerWebAPI.Adapters.Persistence.Models;
 using CustomerWebAPI.Adapters.Web.Services;
+using log4net;
 
 namespace CustomerWebAPI.Adapters.Web.Controllers
 {
     public static class CustomerController
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(CustomerController));
         public static void MapCustomersEndpoints(this IEndpointRouteBuilder routes, IApplicationBuilder app)
         {
             ICustomerService customerService = app.ApplicationServices.GetService<ICustomerService>();
 
-            var group = routes.MapGroup("/api/customers").WithTags(nameof(Customer));
+            var group = routes.MapGroup("/api/restaurent/v1.0/customers").WithTags(nameof(Customer));
 
             group.MapGet("/", () =>
             {

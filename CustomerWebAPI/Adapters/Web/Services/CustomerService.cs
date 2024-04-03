@@ -1,10 +1,12 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
 using CustomerWebAPI.Adapters.Persistence.Services;
+using log4net;
 
 namespace CustomerWebAPI.Adapters.Web.Services
 {
     public class CustomerService : ICustomerService
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(CustomerService));
         private readonly ICustomerRepository customerRepository;
         public CustomerService(ICustomerRepository customerRepository) {
             this.customerRepository = customerRepository;
