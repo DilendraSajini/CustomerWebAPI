@@ -1,5 +1,6 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
 using log4net;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace CustomerWebAPI.Adapters.Persistence.Mappers
@@ -7,10 +8,10 @@ namespace CustomerWebAPI.Adapters.Persistence.Mappers
     public static class CustomerMapper
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(CustomerMapper));
-        public static Customer GetCustomerFromSqlDataReader(SqlDataReader reader)
+        public static CustomerDTO GetCustomerFromSqlDataReader(SqlDataReader reader)
         {
-            var customer = new Customer();
-            customer.Id = Convert.ToInt32(reader.GetOrdinal("ID"));
+            var customer = new CustomerDTO();
+            customer.Id = reader.GetInt32(reader.GetOrdinal("ID"));
             customer.FirstName = reader.GetString(reader.GetOrdinal("NAME_"));
             customer.SurName = reader.GetString(reader.GetOrdinal("SURNAME"));
             customer.FullName = reader.GetString(reader.GetOrdinal("NAMESURNAME"));
@@ -28,7 +29,7 @@ namespace CustomerWebAPI.Adapters.Persistence.Mappers
             return customer;
         }
 
-        public static SqlCommand GetSqlCommandFromCustomer(SqlCommand command, Customer customer)
+        public static SqlCommand GetSqlCommandFromCustomer(SqlCommand command, CustomerDTO customer)
         {
             command.Parameters.AddWithValue("@firstName", customer.FirstName);
             command.Parameters.AddWithValue("@surName", customer.SurName);

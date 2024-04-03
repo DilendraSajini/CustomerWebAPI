@@ -6,16 +6,16 @@ using log4net;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace CustomerWebAPI.Adapters.Persistence.Services
+namespace CustomerWebAPI.Adapters.Persistence.Repository.Customer
 {
     public class CustomerRepository : ICustomerRepository
     {
         public readonly string connectionString = ConfigProvider.GetConfiguration("ConnectionString");
         private static readonly ILog log = LogManager.GetLogger(typeof(CustomerRepository));
-        public List<Customer> GetAllCustomers()
+        public List<CustomerDTO> GetAllCustomers()
         {
             string query = "SELECT TOP (10) * FROM [CustomersNew$]";
-            List<Customer> newCustomerList = new List<Customer>();
+            List<CustomerDTO> newCustomerList = new List<CustomerDTO>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
@@ -46,10 +46,10 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
             }
             return newCustomerList.OrderBy(customer => customer.Id).ToList();
         }
-        public async Task<List<Customer>> GetAllCustomersAsync()
+        public async Task<List<CustomerDTO>> GetAllCustomersAsync()
         {
             string query = "SELECT TOP (10) * FROM [CustomersNew$]";
-            List<Customer> newCustomerList = new List<Customer>();
+            List<CustomerDTO> newCustomerList = new List<CustomerDTO>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
@@ -81,7 +81,7 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
             return newCustomerList.OrderBy(customer => customer.Id).ToList();
         }
 
-        public Customer GetCustomerById(int id)
+        public CustomerDTO GetCustomerById(int id)
         {
             string query = "SELECT * FROM [CustomersNew$] WHERE ID=@Id";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -113,10 +113,10 @@ namespace CustomerWebAPI.Adapters.Persistence.Services
                     throw new DBConnectionException();
                 }
             }
-            return new Customer();
+            return new CustomerDTO();
         }
 
-        public int CreateCustomer(Customer customer)
+        public int CreateCustomer(CustomerDTO customer)
         {
             string query = "INSERT INTO [CustomersNew$] " +
             "(NAME_, SURNAME, NAMESURNAME, GENDER, " +

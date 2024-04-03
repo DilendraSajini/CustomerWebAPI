@@ -1,8 +1,8 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
-using CustomerWebAPI.Adapters.Persistence.Services;
+using CustomerWebAPI.Adapters.Persistence.Repository.Customer;
 using log4net;
 
-namespace CustomerWebAPI.Application.Services
+namespace CustomerWebAPI.Application.Services.Customer
 {
     public class CustomerService : ICustomerService
     {
@@ -13,7 +13,7 @@ namespace CustomerWebAPI.Application.Services
             this.customerRepository = customerRepository;
         }
 
-        public int CreateCustomer(Customer customer)
+        public int CreateCustomer(CustomerDTO customer)
         {
             return customerRepository.CreateCustomer(customer);
         }
@@ -23,16 +23,16 @@ namespace CustomerWebAPI.Application.Services
             return customerRepository.DeleteCustomerById(customerId);
         }
 
-        public List<Customer> GetAllCustomers()
+        public List<CustomerDTO> GetAllCustomers()
         {
             return customerRepository.GetAllCustomers();
         }
-        public Task<List<Customer>> GetAllCustomersAsync()
+        public Task<List<CustomerDTO>> GetAllCustomersAsync()
         {
             return customerRepository.GetAllCustomersAsync();
         }
 
-        public Customer GetCustomerById(int id)
+        public CustomerDTO GetCustomerById(int id)
         {
             return customerRepository.GetCustomerById(id);
         }

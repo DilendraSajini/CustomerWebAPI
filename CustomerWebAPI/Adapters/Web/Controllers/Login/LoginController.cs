@@ -3,7 +3,7 @@ using CustomerWebAPI.Adapters.Web.Security;
 using log4net;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace CustomerWebAPI.Adapters.Web.Controllers
+namespace CustomerWebAPI.Adapters.Web.Controllers.Login
 {
     public static class LoginController
     {
@@ -12,7 +12,7 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
         {
             var group = routes.MapGroup("/api/restaurent/v1.0/login").WithTags(nameof(Login));
 
-            group.MapPost("/", (Login loginDTO) =>
+            group.MapPost("/", (LoginDTO loginDTO) =>
             {
                 try
                 {

@@ -1,9 +1,8 @@
-﻿using CustomerWebAPI.Adapters.Persistence.Mappers;
-using CustomerWebAPI.Adapters.Persistence.Models;
-using CustomerWebAPI.Application.Services;
+﻿using CustomerWebAPI.Adapters.Persistence.Models;
+using CustomerWebAPI.Application.Services.Customer;
 using log4net;
 
-namespace CustomerWebAPI.Adapters.Web.Controllers
+namespace CustomerWebAPI.Adapters.Web.Controllers.Customer
 {
     public static class CustomerController
     {
@@ -38,7 +37,7 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
             .WithOpenApi()
             .RequireAuthorization();
 
-            group.MapPut("/{id}", (int id, Customer input) =>
+            group.MapPut("/{id}", (int id, CustomerDTO input) =>
             {
                 return TypedResults.NoContent();
             })
@@ -46,7 +45,7 @@ namespace CustomerWebAPI.Adapters.Web.Controllers
             .WithOpenApi()
             .RequireAuthorization();
 
-            group.MapPost("/", (Customer customer) =>
+            group.MapPost("/", (CustomerDTO customer) =>
             {
                 return customerService.CreateCustomer(customer);
             })

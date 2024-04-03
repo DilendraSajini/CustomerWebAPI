@@ -1,7 +1,8 @@
-using CustomerWebAPI.Adapters.Persistence.Services;
-using CustomerWebAPI.Adapters.Web.Controllers;
+using CustomerWebAPI.Adapters.Persistence.Repository.Customer;
+using CustomerWebAPI.Adapters.Web.Controllers.Customer;
+using CustomerWebAPI.Adapters.Web.Controllers.Login;
 using CustomerWebAPI.Adapters.Web.Security;
-using CustomerWebAPI.Application.Services;
+using CustomerWebAPI.Application.Services.Customer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 

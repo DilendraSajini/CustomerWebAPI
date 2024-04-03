@@ -8,7 +8,7 @@ namespace CustomerWebAPI.Adapters.Web.Security
 {
     public static class SecurityTokenUtil
     {
-        public static Boolean IsValidUser(Login loginDTO)
+        public static Boolean IsValidUser(LoginDTO loginDTO)
         {
             if (string.IsNullOrEmpty(loginDTO.UserName) ||
                                string.IsNullOrEmpty(loginDTO.Password))
