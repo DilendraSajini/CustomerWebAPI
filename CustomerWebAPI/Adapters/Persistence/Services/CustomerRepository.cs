@@ -6,7 +6,7 @@ using log4net;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace CustomerWebAPI.Application.Services
+namespace CustomerWebAPI.Adapters.Persistence.Services
 {
     public class CustomerRepository : ICustomerRepository
     {

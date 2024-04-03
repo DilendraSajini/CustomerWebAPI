@@ -1,6 +1,6 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Mappers;
 using CustomerWebAPI.Adapters.Persistence.Models;
-using CustomerWebAPI.Adapters.Web.Services;
+using CustomerWebAPI.Application.Services;
 using log4net;
 
 namespace CustomerWebAPI.Adapters.Web.Controllers

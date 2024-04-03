@@ -1,6 +1,6 @@
+using CustomerWebAPI.Adapters.Persistence.Services;
 using CustomerWebAPI.Adapters.Web.Controllers;
 using CustomerWebAPI.Adapters.Web.Security;
-using CustomerWebAPI.Adapters.Web.Services;
 using CustomerWebAPI.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;

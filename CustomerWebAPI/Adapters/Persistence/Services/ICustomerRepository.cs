@@ -1,6 +1,6 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
 
-namespace CustomerWebAPI.Application.Services
+namespace CustomerWebAPI.Adapters.Persistence.Services
 {
     public interface ICustomerRepository
     {
