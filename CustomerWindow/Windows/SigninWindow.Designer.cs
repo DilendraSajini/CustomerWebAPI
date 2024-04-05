@@ -1,6 +1,6 @@
 ﻿namespace CustomerWindow
 {
-    partial class Signin
+    partial class SigninWindow
     {
         /// <summary>
         /// Required designer variable.

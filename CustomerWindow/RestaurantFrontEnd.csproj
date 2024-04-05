@@ -23,4 +23,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

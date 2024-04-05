@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantFrontEnd;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +11,9 @@ using System.Windows.Forms;
 
 namespace CustomerWindow
 {
-    public partial class Signin : Form
+    public partial class SigninWindow : Form
     {
-        public Signin()
+        public SigninWindow()
         {
             InitializeComponent();
         }
@@ -24,7 +25,7 @@ namespace CustomerWindow
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form mainWindow = new MainWindow();
+            Form mainWindow = new RestaurantsMainWindow();
             mainWindow.Show();
         }
     }
