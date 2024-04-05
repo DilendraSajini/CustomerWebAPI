@@ -25,10 +25,11 @@
 
   <ItemGroup>
     <Folder Include="Configuration\" />
-    <Folder Include="NewFolder\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.17" />
     <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />
   </ItemGroup>
 

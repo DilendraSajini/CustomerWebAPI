@@ -2,7 +2,7 @@
 using RestaurantFrontEnd.Services.Utils;
 using System.Configuration;
 
-namespace RestaurantFrontEnd.Services
+namespace RestaurantFrontEnd.Services.Services
 {
     internal class CustomerService
     {
