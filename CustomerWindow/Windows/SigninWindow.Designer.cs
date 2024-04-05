@@ -28,87 +28,87 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
-            label2 = new Label();
-            textBox2 = new TextBox();
-            label3 = new Label();
-            button1 = new Button();
-            button2 = new Button();
-            label4 = new Label();
+            userName = new TextBox();
+            emailLabel = new Label();
+            password = new TextBox();
+            passwordLabel = new Label();
+            signin = new Button();
+            signup = new Button();
+            ORLabel = new Label();
             SuspendLayout();
             // 
-            // textBox1
+            // userName
             // 
-            textBox1.Location = new Point(301, 83);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(260, 23);
-            textBox1.TabIndex = 1;
+            userName.Location = new Point(301, 83);
+            userName.Name = "userName";
+            userName.Size = new Size(260, 23);
+            userName.TabIndex = 1;
             // 
-            // label2
+            // emailLabel
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(173, 91);
-            label2.Name = "label2";
-            label2.Size = new Size(36, 15);
-            label2.TabIndex = 2;
-            label2.Text = "Email";
+            emailLabel.AutoSize = true;
+            emailLabel.Location = new Point(173, 91);
+            emailLabel.Name = "email";
+            emailLabel.Size = new Size(36, 15);
+            emailLabel.TabIndex = 2;
+            emailLabel.Text = "Email";
             // 
-            // textBox2
+            // password
             // 
-            textBox2.Location = new Point(301, 139);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(260, 23);
-            textBox2.TabIndex = 3;
+            password.Location = new Point(301, 139);
+            password.Name = "textBox2";
+            password.Size = new Size(260, 23);
+            password.TabIndex = 3;
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(173, 147);
-            label3.Name = "label3";
-            label3.Size = new Size(57, 15);
-            label3.TabIndex = 4;
-            label3.Text = "Password";
+            passwordLabel.AutoSize = true;
+            passwordLabel.Location = new Point(173, 147);
+            passwordLabel.Name = "password";
+            passwordLabel.Size = new Size(57, 15);
+            passwordLabel.TabIndex = 4;
+            passwordLabel.Text = "Password";
             // 
             // button1
             // 
-            button1.Location = new Point(391, 219);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 5;
-            button1.Text = "Sign in";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            signin.Location = new Point(391, 219);
+            signin.Name = "signin";
+            signin.Size = new Size(75, 23);
+            signin.TabIndex = 5;
+            signin.Text = "Sign in";
+            signin.UseVisualStyleBackColor = true;
+            signin.Click += signinClick;
             // 
-            // button2
+            // signup
             // 
-            button2.Location = new Point(391, 337);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 6;
-            button2.Text = "Sign up";
-            button2.UseVisualStyleBackColor = true;
+            signup.Location = new Point(391, 337);
+            signup.Name = "signup";
+            signup.Size = new Size(75, 23);
+            signup.TabIndex = 6;
+            signup.Text = "Sign up";
+            signup.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // ORLabel
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(417, 281);
-            label4.Name = "label4";
-            label4.Size = new Size(23, 15);
-            label4.TabIndex = 7;
-            label4.Text = "OR";
+            ORLabel.AutoSize = true;
+            ORLabel.Location = new Point(417, 281);
+            ORLabel.Name = "or";
+            ORLabel.Size = new Size(23, 15);
+            ORLabel.TabIndex = 7;
+            ORLabel.Text = "OR";
             // 
             // Signin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(label4);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(label3);
-            Controls.Add(textBox2);
-            Controls.Add(label2);
-            Controls.Add(textBox1);
+            Controls.Add(ORLabel);
+            Controls.Add(signup);
+            Controls.Add(signin);
+            Controls.Add(passwordLabel);
+            Controls.Add(password);
+            Controls.Add(emailLabel);
+            Controls.Add(userName);
             Name = "Signin";
             Text = "Signin";
             Load += Signin_Load;
@@ -117,12 +117,12 @@
         }
 
         #endregion
-        private TextBox textBox1;
-        private Label label2;
-        private TextBox textBox2;
-        private Label label3;
-        private Button button1;
-        private Button button2;
-        private Label label4;
+        private TextBox userName;
+        private Label emailLabel;
+        private TextBox password;
+        private Label passwordLabel;
+        private Button signin;
+        private Button signup;
+        private Label ORLabel;
     }
 }
