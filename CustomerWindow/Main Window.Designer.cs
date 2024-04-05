@@ -1,6 +1,6 @@
 ﻿namespace CustomerWindow
 {
-    partial class Main_Window
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -38,16 +38,16 @@
             radioButton1 = new RadioButton();
             label44 = new Label();
             dataGridView1 = new DataGridView();
-            firstName = new DataGridViewTextBoxColumn();
-            surName = new DataGridViewTextBoxColumn();
-            fullName = new DataGridViewTextBoxColumn();
-            gender = new DataGridViewTextBoxColumn();
-            birthDate = new DataGridViewTextBoxColumn();
-            email = new DataGridViewTextBoxColumn();
-            transactionNumber = new DataGridViewTextBoxColumn();
-            phoneNumber = new DataGridViewTextBoxColumn();
-            postalCode = new DataGridViewTextBoxColumn();
-            address = new DataGridViewTextBoxColumn();
+            FirstName = new DataGridViewTextBoxColumn();
+            SurName = new DataGridViewTextBoxColumn();
+            FullName = new DataGridViewTextBoxColumn();
+            Gender = new DataGridViewTextBoxColumn();
+            BirthDate = new DataGridViewTextBoxColumn();
+            Email = new DataGridViewTextBoxColumn();
+            TransactionNumber = new DataGridViewTextBoxColumn();
+            PhoneNumber = new DataGridViewTextBoxColumn();
+            PostalCode = new DataGridViewTextBoxColumn();
+            Address = new DataGridViewTextBoxColumn();
             textBox43 = new TextBox();
             button1 = new Button();
             customerCreate = new TabPage();
@@ -157,7 +157,7 @@
             tabControl1.Size = new Size(971, 612);
             tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // customerList
             // 
             customerList.Controls.Add(button2);
             customerList.Controls.Add(label43);
@@ -176,6 +176,7 @@
             customerList.TabIndex = 0;
             customerList.Text = "Customer List";
             customerList.UseVisualStyleBackColor = true;
+            customerList.Click += customerList_Click;
             // 
             // button2
             // 
@@ -243,61 +244,62 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { firstName, surName, fullName, gender, birthDate, email, transactionNumber, phoneNumber, postalCode, address });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FirstName, SurName, FullName, Gender, BirthDate, Email, TransactionNumber, PhoneNumber, PostalCode, Address });
             dataGridView1.Location = new Point(17, 165);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(929, 388);
             dataGridView1.TabIndex = 14;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // firstName
+            // FirstName
             // 
-            firstName.HeaderText = "First Name";
-            firstName.Name = "firstName";
+            FirstName.HeaderText = "FirstName";
+            FirstName.Name = "FirstName";
             // 
-            // surName
+            // SurName
             // 
-            surName.HeaderText = "Sur Name";
-            surName.Name = "surName";
+            SurName.HeaderText = "SurName";
+            SurName.Name = "SurName";
             // 
-            // fullName
+            // FullName
             // 
-            fullName.HeaderText = "Full Name";
-            fullName.Name = "fullName";
+            FullName.HeaderText = "FullName";
+            FullName.Name = "FullName";
             // 
-            // gender
+            // Gender
             // 
-            gender.HeaderText = "Gender";
-            gender.Name = "gender";
+            Gender.HeaderText = "Gender";
+            Gender.Name = "Gender";
             // 
-            // birthDate
+            // BirthDate
             // 
-            birthDate.HeaderText = "Birth Date";
-            birthDate.Name = "birthDate";
+            BirthDate.HeaderText = "BirthDate";
+            BirthDate.Name = "BirthDate";
             // 
-            // email
+            // Email
             // 
-            email.HeaderText = "Email";
-            email.Name = "email";
+            Email.HeaderText = "Email";
+            Email.Name = "Email";
             // 
-            // transactionNumber
+            // TransactionNumber
             // 
-            transactionNumber.HeaderText = "Transaction Number";
-            transactionNumber.Name = "transactionNumber";
+            TransactionNumber.HeaderText = "TransactionNumber";
+            TransactionNumber.Name = "TransactionNumber";
             // 
-            // phoneNumber
+            // PhoneNumber
             // 
-            phoneNumber.HeaderText = "Phone Number";
-            phoneNumber.Name = "phoneNumber";
+            PhoneNumber.HeaderText = "PhoneNumber";
+            PhoneNumber.Name = "PhoneNumber";
             // 
-            // postalCode
+            // PostalCode
             // 
-            postalCode.HeaderText = "Postal Code";
-            postalCode.Name = "postalCode";
+            PostalCode.HeaderText = "PostalCode";
+            PostalCode.Name = "PostalCode";
             // 
-            // address
+            // Address
             // 
-            address.HeaderText = "Address";
-            address.Name = "address";
+            Address.HeaderText = "Address";
+            Address.Name = "Address";
             // 
             // textBox43
             // 
@@ -308,14 +310,14 @@
             // 
             // button1
             // 
-            button1.Location = new Point(871, 31);
+            button1.Location = new Point(882, 6);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 12;
             button1.Text = "Sign out";
             button1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // customerCreate
             // 
             customerCreate.Controls.Add(tableLayoutPanel3);
             customerCreate.Location = new Point(4, 24);
@@ -325,6 +327,7 @@
             customerCreate.TabIndex = 1;
             customerCreate.Text = "Customer Create";
             customerCreate.UseVisualStyleBackColor = true;
+            customerCreate.Click += customerCreate_Click;
             // 
             // tableLayoutPanel3
             // 
@@ -415,7 +418,7 @@
             label32.AutoSize = true;
             label32.Location = new Point(3, 367);
             label32.Name = "label32";
-            label32.Size = new Size(36, 15);
+            label32.Size = new Size(35, 15);
             label32.TabIndex = 20;
             label32.Text = "Town";
             label32.TextAlign = ContentAlignment.TopCenter;
@@ -445,7 +448,7 @@
             label35.AutoSize = true;
             label35.Location = new Point(3, 256);
             label35.Name = "label35";
-            label35.Size = new Size(115, 15);
+            label35.Size = new Size(114, 15);
             label35.TabIndex = 17;
             label35.Text = "Transaction Number";
             label35.TextAlign = ContentAlignment.TopCenter;
@@ -1136,7 +1139,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(995, 636);
+            ClientSize = new Size(998, 654);
             Controls.Add(tabControl1);
             Name = "Main_Window";
             Text = "Main_Window";
@@ -1255,16 +1258,16 @@
         private RadioButton radioButton1;
         private Label label44;
         private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn firstName;
-        private DataGridViewTextBoxColumn surName;
-        private DataGridViewTextBoxColumn fullName;
-        private DataGridViewTextBoxColumn gender;
-        private DataGridViewTextBoxColumn birthDate;
-        private DataGridViewTextBoxColumn email;
-        private DataGridViewTextBoxColumn transactionNumber;
-        private DataGridViewTextBoxColumn phoneNumber;
-        private DataGridViewTextBoxColumn postalCode;
-        private DataGridViewTextBoxColumn address;
+        private DataGridViewTextBoxColumn FirstName;
+        private DataGridViewTextBoxColumn SurName;
+        private DataGridViewTextBoxColumn FullName;
+        private DataGridViewTextBoxColumn Gender;
+        private DataGridViewTextBoxColumn BirthDate;
+        private DataGridViewTextBoxColumn Email;
+        private DataGridViewTextBoxColumn TransactionNumber;
+        private DataGridViewTextBoxColumn PhoneNumber;
+        private DataGridViewTextBoxColumn PostalCode;
+        private DataGridViewTextBoxColumn Address;
         private TextBox textBox43;
         private Button button1;
     }
