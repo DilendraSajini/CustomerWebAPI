@@ -6,7 +6,7 @@ namespace CustomerWebAPI.Application.Services.Customer
 {
     public class CustomerService : ICustomerService
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(CustomerService));
+       
         private readonly ICustomerRepository customerRepository;
         public CustomerService(ICustomerRepository customerRepository)
         {

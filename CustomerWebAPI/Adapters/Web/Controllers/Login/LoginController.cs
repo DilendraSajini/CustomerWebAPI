@@ -10,7 +10,8 @@ namespace RestaurantsBackEnd.Adapters.Web.Controllers.Login
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(LoginController));
+        private readonly ILog log = LogManager.GetLogger(typeof(LoginController));
+
         [HttpPost]
         public IActionResult Post([FromBody] LoginDTO loginDTO)
         {

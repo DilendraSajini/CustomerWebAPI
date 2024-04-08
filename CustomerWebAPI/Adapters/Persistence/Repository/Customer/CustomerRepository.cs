@@ -11,7 +11,7 @@ namespace CustomerWebAPI.Adapters.Persistence.Repository.Customer
     public class CustomerRepository : ICustomerRepository
     {
         private readonly string connectionString = ConfigProvider.GetConfiguration("ConnectionString");
-        private static readonly ILog log = LogManager.GetLogger(typeof(CustomerRepository));
+        private readonly ILog log = LogManager.GetLogger(typeof(CustomerRepository));
         public List<CustomerDTO> GetAllCustomers()
         {
             string query = "SELECT TOP (10) * FROM [CustomersNew$]";
