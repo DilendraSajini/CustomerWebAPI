@@ -111,7 +111,7 @@
             Controls.Add(userName);
             Name = "Signin";
             Text = "Signin";
-            Load += Signin_Load;
+            Load += signinLoad;
             ResumeLayout(false);
             PerformLayout();
         }

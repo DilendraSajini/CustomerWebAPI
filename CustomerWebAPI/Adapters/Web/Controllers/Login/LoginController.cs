@@ -1,37 +1,34 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
 using CustomerWebAPI.Adapters.Web.Security;
 using log4net;
+using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace CustomerWebAPI.Adapters.Web.Controllers.Login
+namespace RestaurantsBackEnd.Adapters.Web.Controllers.Login
 {
-    public static class LoginController
+    [Route("/api/restaurant/v1.0/login")]
+    [ApiController]
+    public class LoginController : ControllerBase
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(LoginController));
-        public static void MapLoginEndpoints(this IEndpointRouteBuilder routes)
+        [HttpPost]
+        public IActionResult Post([FromBody] LoginDTO loginDTO)
         {
-            var group = routes.MapGroup("/api/restaurent/v1.0/login").WithTags(nameof(Login));
-
-            group.MapPost("/", (LoginDTO loginDTO) =>
+            try
             {
-                try
+                if (SecurityTokenUtil.IsValidUser(loginDTO))
                 {
-                    if (SecurityTokenUtil.IsValidUser(loginDTO))
-                    {
-                        return Results.Ok(new JwtSecurityTokenHandler().
-                        WriteToken(SecurityTokenUtil.GetJwtSecurityToken()));
-                    }
+                    return Ok(new JwtSecurityTokenHandler().
+                    WriteToken(SecurityTokenUtil.GetJwtSecurityToken()));
                 }
-                catch (Exception ex)
-                {
-                    log.Error($"An error occurred in generating the token: {ex.Message}");
-                    return Results.BadRequest("An error occurred in generating the token");
-                }
-                log.Error("Is not a valid user");
-                return Results.Unauthorized();
-            })
-            .WithName("CreateLogin")
-            .WithOpenApi();
+            }
+            catch (Exception ex)
+            {
+                log.Error($"An error occurred in generating the token: {ex.Message}");
+                return BadRequest("An error occurred in generating the token");
+            }
+            log.Error("Is not a valid user");
+            return Unauthorized();
         }
     }
 }

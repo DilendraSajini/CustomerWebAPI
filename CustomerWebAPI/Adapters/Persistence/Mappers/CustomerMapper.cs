@@ -1,6 +1,5 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
 using log4net;
-using System.Data;
 using System.Data.SqlClient;
 
 namespace CustomerWebAPI.Adapters.Persistence.Mappers

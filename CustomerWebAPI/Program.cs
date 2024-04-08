@@ -1,13 +1,10 @@
 using CustomerWebAPI.Adapters.Persistence.Repository.Customer;
-using CustomerWebAPI.Adapters.Web.Controllers.Customer;
-using CustomerWebAPI.Adapters.Web.Controllers.Login;
 using CustomerWebAPI.Adapters.Web.Security;
 using CustomerWebAPI.Application.Services.Customer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
@@ -61,7 +58,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.MapControllers();
-app.MapCustomersEndpoints(app);
-app.MapLoginEndpoints();
 app.Run();
 

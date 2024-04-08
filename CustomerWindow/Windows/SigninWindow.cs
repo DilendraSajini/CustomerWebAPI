@@ -12,7 +12,7 @@ namespace CustomerWindow
             signinService = new SigninService();
         }
 
-        private void Signin_Load(object sender, EventArgs e)
+        private void signinLoad(object sender, EventArgs e)
         {
 
         }

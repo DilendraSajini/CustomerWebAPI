@@ -4,10 +4,10 @@ namespace CustomerWebAPI.Application.Services.Customer
 {
     public interface ICustomerService
     {
-        public List<CustomerDTO> GetAllCustomers();
-        public Task<List<CustomerDTO>> GetAllCustomersAsync();
-        public CustomerDTO GetCustomerById(int id);
-        public int CreateCustomer(CustomerDTO customer);
-        public int DeleteCustomerById(int customerId);
+        List<CustomerDTO> GetAllCustomers();
+        Task<List<CustomerDTO>> GetAllCustomersAsync();
+        CustomerDTO GetCustomerById(int id);
+        int CreateCustomer(CustomerDTO customer);
+        int DeleteCustomerById(int customerId);
     }
 }

@@ -1,65 +1,54 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
 using CustomerWebAPI.Application.Services.Customer;
-using log4net;
+using Microsoft.AspNetCore.Mvc;
 
-namespace CustomerWebAPI.Adapters.Web.Controllers.Customer
+namespace RestaurantsBackEnd.Adapters.Web.Controllers.Customer
 {
-    public static class CustomerController
+    [Route("/api/restaurant/v1.0/customers")]
+    [ApiController]
+    public class CustomerController : ControllerBase
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(CustomerController));
-        public static void MapCustomersEndpoints(this IEndpointRouteBuilder routes, IApplicationBuilder app)
+        private readonly ICustomerService customerService;
+
+        public CustomerController(ICustomerService customerService)
         {
-            ICustomerService customerService = app.ApplicationServices.GetService<ICustomerService>();
+            this.customerService = customerService;
+        }
 
-            var group = routes.MapGroup("/api/restaurent/v1.0/customers").WithTags(nameof(Customer));
+        [HttpGet]
+        public IEnumerable<CustomerDTO> Get()
+        {
+            return customerService.GetAllCustomers();
+        }
 
-            group.MapGet("/", () =>
-            {
-                return customerService.GetAllCustomers();
-            })
-            .WithName("GetAllCustomers")
-            .WithOpenApi()
-            .RequireAuthorization();
+        [HttpGet("async")]
+        public Task<List<CustomerDTO>> GetAsync()
+        {
+            return customerService.GetAllCustomersAsync();
+        }
 
-            group.MapGet("/async", () =>
-            {
-                return customerService.GetAllCustomersAsync();
-            })
-            .WithName("GetAllCustomersAsync")
-            .WithOpenApi()
-            .RequireAuthorization();
+        [HttpGet("{id}")]
+        public CustomerDTO Get(int id)
+        {
+            return customerService.GetCustomerById(id);
+        }
 
-            group.MapGet("/{id}", (int id) =>
-            {
-                return customerService.GetCustomerById(id);
-            })
-            .WithName("GetCustomerById")
-            .WithOpenApi()
-            .RequireAuthorization();
+        [HttpPost]
+        public int Post([FromBody] CustomerDTO customer)
+        {
+            return customerService.CreateCustomer(customer);
+        }
 
-            group.MapPut("/{id}", (int id, CustomerDTO input) =>
-            {
-                return TypedResults.NoContent();
-            })
-            .WithName("UpdateCustomer")
-            .WithOpenApi()
-            .RequireAuthorization();
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+            customerService.DeleteCustomerById(id);
+        }
 
-            group.MapPost("/", (CustomerDTO customer) =>
-            {
-                return customerService.CreateCustomer(customer);
-            })
-            .WithName("CreateCustomer")
-            .WithOpenApi()
-            .RequireAuthorization();
-
-            group.MapDelete("/{id}", (int id) =>
-            {
-                return customerService.DeleteCustomerById(id);
-            })
-            .WithName("DeleteCustomer")
-            .WithOpenApi()
-            .RequireAuthorization();
+        [HttpDelete("{id}")]
+        public int Delete(int id)
+        {
+            return customerService.DeleteCustomerById(id);
         }
     }
 }
