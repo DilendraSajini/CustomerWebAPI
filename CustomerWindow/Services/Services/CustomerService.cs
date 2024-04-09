@@ -4,14 +4,20 @@ using System.Configuration;
 
 namespace RestaurantFrontEnd.Services.Services
 {
-    internal class CustomerService
+    internal class CustomerService : ICustomerService
     {
-        private string customerServicePath = ConfigurationManager.AppSettings["baseUrl"] + "customers/";
+        private string customerServicePath;
+        private readonly JWTHeaderRequester jwtHeaderRequester;
 
+        public CustomerService()
+        {
+            customerServicePath = ConfigurationManager.AppSettings["baseUrl"] + "customers/";
+            jwtHeaderRequester = new JWTHeaderRequester();
+        }
         public List<Customer> getCustomers()
         {
             List<Customer> customers = new List<Customer>();
-            var response = RequestUtil.ExecuteGetRequest($"{customerServicePath}");
+            var response = jwtHeaderRequester.ExecuteGetRequest($"{customerServicePath}");
             if (response != null && response.IsSuccessStatusCode)
             {
                 var data = response.Content.ReadAsStringAsync().Result;

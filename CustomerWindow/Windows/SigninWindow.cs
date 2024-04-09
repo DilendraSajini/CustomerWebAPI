@@ -1,11 +1,12 @@
-﻿using RestaurantFrontEnd;
+﻿using Newtonsoft.Json.Linq;
+using RestaurantFrontEnd;
 using RestaurantFrontEnd.Services.Models;
 using RestaurantFrontEnd.Services.Services;
 namespace CustomerWindow
 {
     public partial class SigninWindow : Form
     {
-        private SigninService signinService;
+        private ISigninService signinService;
         public SigninWindow()
         {
             InitializeComponent();
@@ -14,14 +15,14 @@ namespace CustomerWindow
 
         private void signinLoad(object sender, EventArgs e)
         {
-
         }
-
         private void signinClick(object sender, EventArgs e)
         {
             Login login = new Login();
-            login.UserName = userName.Text;
-            login.Password = password.Text;
+            //login.UserName = userName.Text;
+            //login.Password = password.Text;
+            login.UserName = "joydip";
+            login.Password = "joydip123";
             if (!isValidInput(login))
             {
                 MessageBox.Show("Empty login details to the system: " + "", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -30,10 +31,8 @@ namespace CustomerWindow
             {
                 try
                 {
-                    signinService.Login(login);
-                    Form mainWindow = new RestaurantsMainWindow();
-                    mainWindow.Show();
-                    this.Hide();
+                    signinService.LoginWithBasicCredentials(login);
+                    dispalyMainWindow();
                 }
                 catch (UnauthorizedAccessException ex)
                 {
@@ -46,10 +45,22 @@ namespace CustomerWindow
             }
         }
 
+        private void dispalyMainWindow()
+        {
+            Form mainWindow = new RestaurantsMainWindow();
+            mainWindow.Show();
+            this.Hide();
+        }
+
         private bool isValidInput(Login login)
         {
             return !(string.IsNullOrEmpty(login.UserName) ||
                                string.IsNullOrEmpty(login.Password));
+        }
+
+        private void signupClick(object sender, EventArgs e)
+        {
+            MessageBox.Show(MPHVaultTools.MPHVault.Lookup("WebService"));
         }
     }
 }

@@ -6,7 +6,8 @@
                         .AddJsonFile("appsettings.json").Build();
         public static string GetConfiguration(string str)
         {
-            if(configuration != null)
+          
+            if (configuration != null)
             {
                 return configuration.GetValue<string>(str);
             }

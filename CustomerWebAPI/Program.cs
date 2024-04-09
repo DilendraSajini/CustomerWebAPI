@@ -2,6 +2,7 @@ using CustomerWebAPI.Adapters.Persistence.Repository.Customer;
 using CustomerWebAPI.Adapters.Web.Security;
 using CustomerWebAPI.Application.Services.Customer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,15 +11,25 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddControllers();
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//}).AddJwtBearer(o =>
+//{
+//    o.TokenValidationParameters = BasicSecurityUtil.GetTokenValidationParameters();
+//});
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = IISDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = IISDefaults.AuthenticationScheme;
+    options.DefaultScheme = IISDefaults.AuthenticationScheme;
 }).AddJwtBearer(o =>
 {
-    o.TokenValidationParameters = SecurityTokenUtil.GetTokenValidationParameters();
+    o.TokenValidationParameters = BasicSecurityUtil.GetTokenValidationParameters();
 });
+
 builder.Services.AddAuthorization();
 builder.Services.AddSwaggerGen(option =>
 {

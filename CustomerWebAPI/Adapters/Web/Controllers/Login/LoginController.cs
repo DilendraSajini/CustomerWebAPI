@@ -17,10 +17,10 @@ namespace RestaurantsBackEnd.Adapters.Web.Controllers.Login
         {
             try
             {
-                if (SecurityTokenUtil.IsValidUser(loginDTO))
+                if (BasicSecurityUtil.IsValidBasicCredentials(loginDTO))
                 {
                     return Ok(new JwtSecurityTokenHandler().
-                    WriteToken(SecurityTokenUtil.GetJwtSecurityToken()));
+                    WriteToken(BasicSecurityUtil.GetJwtSecurityToken()));
                 }
             }
             catch (Exception ex)

@@ -3,12 +3,13 @@ using CustomerWebAPI.Config;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace CustomerWebAPI.Adapters.Web.Security
 {
-    public static class SecurityTokenUtil
+    public static class BasicSecurityUtil
     {
-        public static Boolean IsValidUser(LoginDTO loginDTO)
+        public static Boolean IsValidBasicCredentials(LoginDTO loginDTO)
         {
             if (string.IsNullOrEmpty(loginDTO.UserName) ||
                                string.IsNullOrEmpty(loginDTO.Password))
@@ -43,17 +44,26 @@ namespace CustomerWebAPI.Adapters.Web.Security
 
         public static TokenValidationParameters GetTokenValidationParameters()
         {
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            rsa.FromXmlString(Base64Decode(ConfigProvider.GetConfiguration("Jwt:Key")));
+            RsaSecurityKey signingKey = new RsaSecurityKey(rsa);
+
             return new TokenValidationParameters
             {
                 ValidIssuer = ConfigProvider.GetConfiguration("Jwt:Issuer"),
                 ValidAudience = ConfigProvider.GetConfiguration("Jwt:Audience"),
-                IssuerSigningKey = new SymmetricSecurityKey
-                    (System.Text.Encoding.UTF8.GetBytes(ConfigProvider.GetConfiguration("Jwt:Key"))),
+                IssuerSigningKey = signingKey,
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = false,
                 ValidateIssuerSigningKey = true
             };
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
     }
 }

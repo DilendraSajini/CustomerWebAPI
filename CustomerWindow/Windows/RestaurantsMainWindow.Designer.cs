@@ -1,4 +1,5 @@
-﻿namespace RestaurantFrontEnd
+﻿
+namespace RestaurantFrontEnd
 {
     partial class RestaurantsMainWindow
     {
@@ -254,6 +255,7 @@
             signOut.TabIndex = 12;
             signOut.Text = "Sign out";
             signOut.UseVisualStyleBackColor = true;
+            signOut.Click += signOutClick;
             // 
             // createCustomer
             // 
@@ -563,6 +565,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1002, 609);
             Controls.Add(mainWindow);
+            Load += mainWindowLoad;
             Name = "RestaurantsMainWindow";
             Text = "RestaurantsMainWindow";
             mainWindow.ResumeLayout(false);

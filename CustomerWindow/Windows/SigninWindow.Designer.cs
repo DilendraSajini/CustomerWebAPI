@@ -48,7 +48,7 @@
             // 
             emailLabel.AutoSize = true;
             emailLabel.Location = new Point(173, 91);
-            emailLabel.Name = "email";
+            emailLabel.Name = "emailLabel";
             emailLabel.Size = new Size(36, 15);
             emailLabel.TabIndex = 2;
             emailLabel.Text = "Email";
@@ -56,20 +56,20 @@
             // password
             // 
             password.Location = new Point(301, 139);
-            password.Name = "textBox2";
+            password.Name = "password";
             password.Size = new Size(260, 23);
             password.TabIndex = 3;
             // 
-            // label3
+            // passwordLabel
             // 
             passwordLabel.AutoSize = true;
             passwordLabel.Location = new Point(173, 147);
-            passwordLabel.Name = "password";
+            passwordLabel.Name = "passwordLabel";
             passwordLabel.Size = new Size(57, 15);
             passwordLabel.TabIndex = 4;
             passwordLabel.Text = "Password";
             // 
-            // button1
+            // signin
             // 
             signin.Location = new Point(391, 219);
             signin.Name = "signin";
@@ -87,17 +87,18 @@
             signup.TabIndex = 6;
             signup.Text = "Sign up";
             signup.UseVisualStyleBackColor = true;
+            signup.Click += signupClick;
             // 
             // ORLabel
             // 
             ORLabel.AutoSize = true;
             ORLabel.Location = new Point(417, 281);
-            ORLabel.Name = "or";
+            ORLabel.Name = "ORLabel";
             ORLabel.Size = new Size(23, 15);
             ORLabel.TabIndex = 7;
             ORLabel.Text = "OR";
             // 
-            // Signin
+            // SigninWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -109,7 +110,7 @@
             Controls.Add(password);
             Controls.Add(emailLabel);
             Controls.Add(userName);
-            Name = "Signin";
+            Name = "SigninWindow";
             Text = "Signin";
             Load += signinLoad;
             ResumeLayout(false);

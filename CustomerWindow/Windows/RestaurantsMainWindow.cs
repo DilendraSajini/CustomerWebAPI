@@ -4,11 +4,33 @@ namespace RestaurantFrontEnd
 {
     public partial class RestaurantsMainWindow : Form
     {
-        private CustomerService customerService = new CustomerService();
+        private ICustomerService customerService;
+        private ISigninService signinService;
         public RestaurantsMainWindow()
         {
             InitializeComponent();
+            customerService = new CustomerService();
+            signinService = new SigninService();
             setDataGridDataSource();
+        }
+        private void mainWindowLoad(object sender, EventArgs e)
+        {
+            windowsSignIn();
+        }
+        private void windowsSignIn()
+        {
+            try
+            {
+                signinService.LoginWithWindowsCredentials();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show("Error login to the system: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to the system: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void setDataGridDataSource()
@@ -24,6 +46,11 @@ namespace RestaurantFrontEnd
             dataGridView.Columns["PostalCode"].DataPropertyName = "PostalCode";
             dataGridView.Columns["Address"].DataPropertyName = "Address";
             dataGridView.DataSource = customerService.getCustomers();
+        }
+
+        private void signOutClick(object sender, EventArgs e)
+        {
+
         }
     }
 }

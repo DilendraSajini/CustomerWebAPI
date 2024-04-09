@@ -1,42 +1,47 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Net;
+using System.Net.Http.Headers;
 
 namespace RestaurantFrontEnd.Services.Utils
 {
-    public static class RequestUtil
+    public class JWTHeaderRequester
     {
-        private static HttpClient client = new HttpClient();
-        private static string jwtToken = "";
+        private HttpClient client;
+        private string jwtToken;
 
-        public static HttpResponseMessage ExecuteGetRequest(string uri)
+        public JWTHeaderRequester()
+        {
+            client = new HttpClient();
+            jwtToken = "";
+        }
+        public HttpResponseMessage ExecuteGetRequest(string uri)
         {
             setRequestHeader();
             return client.GetAsync(uri).Result;
         }
 
-        public static HttpResponseMessage ExecutePostRequest(string uri, HttpContent payload)
+        public HttpResponseMessage ExecutePostRequest(string uri, HttpContent payload)
         {
             setRequestHeader();
             return client.PostAsync(uri, payload).Result;
         }
 
-        public static async Task<HttpResponseMessage> ExecuteDeleteRequestAsync(string uri)
+        public async Task<HttpResponseMessage> ExecuteDeleteRequestAsync(string uri)
         {
             setRequestHeader();
             return await client.DeleteAsync(uri);
         }
 
-        public static HttpResponseMessage ExecutePutRequest(string uri, HttpContent payload)
+        public HttpResponseMessage ExecutePutRequest(string uri, HttpContent payload)
         {
             setRequestHeader();
             return client.PutAsync(uri, payload).Result;
         }
-
-        public static void SaveJwtToken(string token)
+        public void SaveJwtToken(string token)
         {
             jwtToken = token;
         }
 
-        private static void setRequestHeader()
+        private void setRequestHeader()
         {
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
