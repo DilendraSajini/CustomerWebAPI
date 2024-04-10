@@ -13,9 +13,9 @@ builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = IISDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = IISDefaults.AuthenticationScheme;
-    options.DefaultScheme = IISDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(o =>
 {
     o.TokenValidationParameters = BasicSecurityUtil.GetTokenValidationParameters();
