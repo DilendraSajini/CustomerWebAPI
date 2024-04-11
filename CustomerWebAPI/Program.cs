@@ -2,7 +2,6 @@ using CustomerWebAPI.Adapters.Persistence.Repository.Customer;
 using CustomerWebAPI.Adapters.Web.Security;
 using CustomerWebAPI.Application.Services.Customer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,6 +48,9 @@ builder.Services.AddSwaggerGen(option =>
         }
     });
 });
+var serviceProvider = builder.Services.BuildServiceProvider();
+var configProvider = serviceProvider.GetRequiredService<IConfiguration>();
+BasicSecurityUtil.Initialize(configProvider);
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

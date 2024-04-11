@@ -1,5 +1,4 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Models;
-using CustomerWebAPI.Config;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,6 +8,12 @@ namespace CustomerWebAPI.Adapters.Web.Security
 {
     public static class BasicSecurityUtil
     {
+        private static IConfiguration configuration;
+
+        public static void Initialize(IConfiguration configurationService)
+        {
+            configuration = configurationService;
+        }
         public static Boolean IsValidBasicCredentials(LoginDTO loginDTO)
         {
             if (string.IsNullOrEmpty(loginDTO.UserName) ||
@@ -16,8 +21,8 @@ namespace CustomerWebAPI.Adapters.Web.Security
             {
                 return false;
             }
-            else if (loginDTO.UserName.Equals(ConfigProvider.GetConfiguration("User:UserName")) &&
-            loginDTO.Password.Equals(ConfigProvider.GetConfiguration("User:Password")))
+            else if (loginDTO.UserName.Equals(configuration.GetValue<string>("User:UserName")) &&
+            loginDTO.Password.Equals(configuration.GetValue<string>("User:Password")))
             {
                 return true;
             }
@@ -28,14 +33,14 @@ namespace CustomerWebAPI.Adapters.Web.Security
         }
         public static JwtSecurityToken GetJwtSecurityToken()
         {
-            var secretKey = ConfigProvider.GetConfiguration("Jwt:Key");
+            var secretKey = configuration.GetValue<string>("Jwt:Key");
             var symmetricKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey));
             var signinCredentials = new SigningCredentials
             (symmetricKey, SecurityAlgorithms.HmacSha256);
 
             return new JwtSecurityToken(
-                            issuer: ConfigProvider.GetConfiguration("Jwt:Issuer"),
-                            audience: ConfigProvider.GetConfiguration("Jwt:Audience"),
+                            issuer: configuration.GetValue<string>("Jwt:Issuer"),
+                            audience: configuration.GetValue<string>("Jwt:Audience"),
                             claims: new List<Claim>(),
                             expires: DateTime.Now.AddMinutes(10),
                             signingCredentials: signinCredentials
@@ -45,13 +50,13 @@ namespace CustomerWebAPI.Adapters.Web.Security
         public static TokenValidationParameters GetTokenValidationParameters()
         {
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-            rsa.FromXmlString(Base64Decode(ConfigProvider.GetConfiguration("Jwt:Key")));
+            rsa.FromXmlString(Base64Decode(configuration.GetValue<string>("Jwt:Key")));
             RsaSecurityKey signingKey = new RsaSecurityKey(rsa);
 
             return new TokenValidationParameters
             {
-                ValidIssuer = ConfigProvider.GetConfiguration("Jwt:Issuer"),
-                ValidAudience = ConfigProvider.GetConfiguration("Jwt:Audience"),
+                ValidIssuer = configuration.GetValue<string>("Jwt:Issuer"),
+                ValidAudience = configuration.GetValue<string>("Jwt:Audience"),
                 IssuerSigningKey = signingKey,
                 ValidateIssuer = true,
                 ValidateAudience = true,

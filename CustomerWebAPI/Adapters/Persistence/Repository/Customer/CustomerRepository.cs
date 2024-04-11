@@ -1,7 +1,6 @@
 ﻿using CustomerWebAPI.Adapters.Persistence.Mappers;
 using CustomerWebAPI.Adapters.Persistence.Models;
 using CustomerWebAPI.Adapters.Web.Exceptions;
-using CustomerWebAPI.Config;
 using log4net;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,8 +9,13 @@ namespace CustomerWebAPI.Adapters.Persistence.Repository.Customer
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly string connectionString = ConfigProvider.GetConfiguration("ConnectionString");
+        private readonly string connectionString;
         private readonly ILog log = LogManager.GetLogger(typeof(CustomerRepository));
+        public CustomerRepository(IConfiguration configuration)
+        {
+            this.connectionString = configuration.GetValue<string>("ConnectionString");
+        }
+
         public List<CustomerDTO> GetAllCustomers()
         {
             string query = "SELECT TOP (10) * FROM [CustomersNew$]";
